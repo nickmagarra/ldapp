@@ -1,6 +1,6 @@
 <?php
-include 'auth/index.php'; 
-include 'conf/ldap_auth.php';
+include_once 'auth/index.php';
+include_once 'conf/ldap_auth.php';
 ?>
 
 <?php if(AUTH) {
