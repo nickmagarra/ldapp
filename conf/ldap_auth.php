@@ -1,6 +1,33 @@
 <?php
 header('Content-type: text/html;charset=utf-8');
+
 session_start();
+
+define('AUTH', isset($_SESSION['user']) && isset($users[$_SESSION['user']]));
+$user = AUTH ? $users[$_SESSION['user']] : null;
+
+if(!AUTH) {
+  if(!empty($_POST['login']) && !empty($_POST['password']) && isset($users[$_POST['login']])) {
+      if($users[$_POST['login']]['password'] == getPassword($_POST['password'])) {
+            $_SESSION['user'] = $_POST['login'];
+            setcookie('login', $_POST['login'], time() + 900, '/');
+            setcookie('password', getPassword($users[$_POST['login']]['password']), time() + 900, '/');
+			echo 'Accepted';
+			$_SESSION['message'] = 'Успешно';
+			header('Location: /index.php');
+      }
+  }
+  if(!isset($_SESSION['user']) || $_SESSION['user'] != $_POST['login']) {
+    $_SESSION['message'] = 'Неверный логин или пароль';
+  }
+} else {
+//        unset($_SESSION['user']);
+//        setcookie('login', '', time() - 900, '/');
+//        setcookie('password', '', time() - 900, '/');
+          $_SESSION['message'] = 'Уже авторизован';
+		  echo 'Authorized';
+		  header('Location: /index.php');
+}
 
 define('SALT', 'As913yr-1u3 -ru1 mr=1r=1 m=0r813');
 
@@ -19,8 +46,7 @@ if(!isset($_SESSION['user']) && isset($_COOKIE['login']) && isset($_COOKIE['pass
     $_SESSION['user'] = $_COOKIE['login'];
 }
 
-define('AUTH', isset($_SESSION['user']) && isset($users[$_SESSION['user']]));
-$user = AUTH ? $users[$_SESSION['user']] : null;
+
 
 $message = '';
 if(!empty($_SESSION['message'])) {

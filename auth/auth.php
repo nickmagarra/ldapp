@@ -1,11 +1,3 @@
-<?php
-
-if (!$_SESSION) {
-	echo 'Not authorized';
-	include_once 'auth/auth.php';
-	exit;
-}
-?>
 <!DOCTYPE html>
 <html>
   <head>
@@ -32,7 +24,12 @@ if (!$_SESSION) {
   </head>
   <body>
     <section>
-      <h1>Congratulations!</h1>
+      <h2>Auth</h2>
+      <form action="conf/ldap_auth.php" method="post">
+        <input required autofocus type="text" id="webLogin" name="login" placeholder="login"><br><br>
+        <input required type="password" id="webPass" name="password" placeholder="password"><br><br>
+        <input type="submit" value="Enter">
+      </form>
     </section>
   </body>
 </html>
