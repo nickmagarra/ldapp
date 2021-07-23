@@ -1,16 +1,4 @@
-<?php
-include_once 'auth/index.php';
-include_once 'conf/ldap_auth.php';
-?>
-
-<?php if(AUTH) {
-header('Content-type: text/html;charset=utf-8');
-
-    echo $user['name'];
-
-} else { ?>
-
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -35,7 +23,11 @@ header('Content-type: text/html;charset=utf-8');
     </style>
   </head>
   <body>
-    <section class="auth_form">
+<?
+  include_once 'auth/index.php';
+  include_once 'conf/ldap_auth.php';
+?>
+    <section>
       <h2>Auth</h2>
       <form action="auth/index.php" method="post">
         <input required autofocus type="text" id="webLogin" name="login" placeholder="login"><br><br>
@@ -45,4 +37,3 @@ header('Content-type: text/html;charset=utf-8');
     </section>
   </body>
 </html>
-<?php } ?>

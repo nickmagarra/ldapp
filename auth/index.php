@@ -9,7 +9,7 @@ if(!AUTH) {
           $_SESSION['user'] = $_POST['login'];
             setcookie('login', $_POST['login'], time() + 900, '/');
             setcookie('password', getPassword($users[$_POST['login']]['password']), time() + 900, '/');
-			header('Location: index.php');
+			$_SESSION['message'] = 'Успешно';
       }
   }
   if(!isset($_SESSION['user']) || $_SESSION['user'] != $_POST['login']) {
@@ -19,5 +19,6 @@ if(!AUTH) {
 //        unset($_SESSION['user']);
 //        setcookie('login', '', time() - 900, '/');
 //        setcookie('password', '', time() - 900, '/');
-header('Location: index.php');
+          $_SESSION['message'] = 'Уже авторизован';
 }
+header('Location: /index.php');
